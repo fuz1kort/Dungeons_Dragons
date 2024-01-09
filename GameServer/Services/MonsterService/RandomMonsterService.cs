@@ -9,7 +9,7 @@ public class RandomMonsterService(AppDbContext context) : IRandomMonsterService
     {
         IQueryable<Monster> monsters = context.Monsters!;
         var rnd = new Random();
-        var id = rnd.Next(0,monsters.Count());
+        var id = rnd.Next(1, monsters.Count() + 1);
         return monsters.FirstOrDefault(x => x.Id == id)!;
     }
 }
