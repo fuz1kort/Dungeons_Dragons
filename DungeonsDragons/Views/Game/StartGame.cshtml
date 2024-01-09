@@ -1,0 +1,171 @@
+﻿@model DungeonsDragons.ViewModels.GameViewModel
+
+@{
+    ViewBag.Title = "D&D";
+    Layout = "_Layout";
+}
+<style>
+    .game {
+        margin: 20px;
+    }
+
+    #log {
+        background-color: #f5f5f5;
+        padding: 20px;
+        border-radius: 5px;
+        margin-bottom: 20px;
+    }
+
+    h2 {
+        color: #333;
+        font-size: 24px;
+        margin-bottom: 10px;
+    }
+
+    p {
+        margin-bottom: 5px;
+    }
+
+    .form-group {
+        margin-bottom: 20px;
+    }
+
+    .form {
+        margin-bottom: 10px;
+    }
+
+    input[type="text"], 
+    input[type="number"]{
+        width: 100%;
+        padding: 5px;
+        border-radius: 5px;
+        border: 1px solid #ccc;
+    }
+
+    button {
+        padding: 10px 20px;
+        background-color: #4caf50;
+        border: none;
+        color: white;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+
+    button:disabled {
+        background-color: #ccc;
+        cursor: not-allowed;
+    }
+
+    .NewBattle {
+        text-align: center;
+    }
+
+    .NewBattle button {
+        background-color: #2196f3;
+    }
+    
+    .Battle {
+        text-align: center;
+    }
+
+    h3 {
+        color: red;
+        font-size: 16px;
+    }
+    
+    label {
+        font-weight: bold;
+    }
+</style>
+
+<div class="game">
+    <div id="log">
+        @if (Model.Monster is not null)
+        {
+            <h2>Ваш противник:</h2>
+            <p>
+                <strong>Name: </strong> @Model.Monster.Name
+            </p>
+            <p>
+                <strong>Hit Points: </strong> @Model.Monster.HitPoints
+            </p>
+            <p>
+                <strong>Attack Modifier+: </strong> @Model.Monster.AttackModifier
+            </p>
+            <p>
+                <strong>Attack Per Round: </strong> @Model.Monster.AttackPerRound
+            </p>
+            <p>
+                <strong>Damage: </strong> @Model.Monster.Damage
+            </p>
+            <p>
+                <strong>Damage Modifier+: </strong> @Model.Monster.DamageModifier
+            </p>
+            <p>
+                <strong>Ac: </strong> @Model.Monster.Ac
+            </p>
+        }
+
+        @if (Model.FightLog is not null)
+        {
+            <h2>Лог Боя</h2>
+            @foreach (var item in Model.FightLog)
+            {
+                <p>@item</p>
+            }
+        }
+
+        <div class="form">
+            <form asp-action="StartGame" asp-controller="Game">
+                <div class="form-group">
+                    <div class="input-group">
+                        <label>Nickname:</label>
+                        <input type="text" aria-required="true" name="name" maxlength="15" value="@Model.Player!.Name" required/>
+                    </div>
+                    <div class="input-group">
+                        <label>Hit Points:</label>
+                        <input type="number" aria-required="true" name="hp" value="@Model.Player!.HitPoints" min="1" max="499" required/>
+                    </div>
+                    <div class="input-group">
+                        <label>Attack Modifier +:</label>
+                        <input type="number" aria-required="true" name="attackModifier" value="@Model.Player!.AttackModifier" min="1" max="99" required/>
+                    </div>
+                    <div class="input-group">
+                        <label>Attack Per Round:</label>
+                        <input type="number" aria-required="true" name="apr" value="@Model.Player!.AttackPerRound" min="1" max="99" required/>
+                    </div>
+                    <div class="input-group">
+                        <label>Damage:</label>
+                        <input type="text" aria-required="true" name="damage" maxlength="3" minlength="3" value="@Model.Player!.Damage" required/>
+                    </div>
+                    <div class="input-group">
+                        <label>Damage Modifier +:</label>
+                        <input type="number" aria-required="true" name="damageModifier" value="@Model.Player!.DamageModifier" min="1" max="99" required/>
+                    </div>
+                    <div class="input-group">
+                        <label>AC:</label>
+                        <input type="number" aria-required="true" name="ac" value="@Model.Player!.Ac" min="1" max="99" required/>
+                    </div>
+                </div>
+
+                <div class="Battle">
+                    @if (Model is { IsPlayerLose: true, Monster: not null })
+                    {
+                        <h3 style="color: red">Вы мертвы</h3>
+                        <button disabled type="submit" style="margin: 5px">Бой</button>
+                    }
+                    else
+                    {
+                        <button type="submit" style="margin: 5px">Бой</button>
+                    }
+                </div>
+            </form>
+        </div>
+
+        <div class="NewBattle">
+            <form asp-controller="Home" asp-action="Index">
+                <button type="submit" style="margin: 5px">Новый бой</button>
+            </form>
+        </div>
+    </div>
+</div>
