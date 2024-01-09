@@ -1,0 +1,105 @@
+﻿@{
+    ViewData["Title"] = "D&D";
+}
+
+<style>
+    h2 {
+        color: #333;
+        font-size: 24px;
+        margin-bottom: 10px;
+    }
+
+    p {
+        margin-bottom: 5px;
+    }
+
+    .form-group {
+        margin-bottom: 20px;
+    }
+
+    .form {
+        margin-bottom: 10px;
+    }
+
+    input[type="text"],
+    input[type="number"] {
+        width: 100%;
+        padding: 5px;
+        border-radius: 5px;
+        border: 1px solid #ccc;
+    }
+
+    button {
+        padding: 10px 20px;
+        background-color: #4caf50;
+        border: none;
+        color: white;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+
+    button:disabled {
+        background-color: #ccc;
+        cursor: not-allowed;
+    }
+
+    .NewBattle {
+        text-align: center;
+    }
+
+    .NewBattle button {
+        margin-top: 20px;
+        background-color: #2196f3;
+    }
+
+    h3 {
+        color: red;
+        font-size: 16px;
+    }
+    
+    label {
+        font-weight: bold;
+    }
+</style>
+
+<div class="text-center">
+    <h1 class="display-4">Добро пожаловать</h1>
+    @* ReSharper disable once Asp.Entity *@
+    <p>в Dungeons&Dragons</p>
+    <div class="form"></div>
+    <form asp-controller="Game" asp-action="StartGame" style="display: flex; flex-flow: column nowrap;">
+        <div class="form-group">
+            <div class="input-group">
+                <label>Nickname:</label>
+                <input type="text" aria-required="true" name="name" maxlength="15" required/>
+            </div>
+            <div class="input-group">
+                <label>Hit Points:</label>
+                <input type="number" aria-required="true" name="hp" min="1" max="499" maxlength="3" required/>
+            </div>
+            <div class="input-group">
+                <label>Attack Modifier +:</label>
+                <input type="number" aria-required="true" name="attackModifier" min="1" max="99" required/>
+            </div>
+            <div class="input-group">
+                <label>Attack Per Round:</label>
+                <input type="number" aria-required="true" name="apr" min="1" max="99" required/>
+            </div>
+            <div class="input-group">
+                <label>Damage:</label>
+                <input type="text" aria-required="true" name="damage" maxlength="3" minlength="3" required/>
+            </div>
+            <div class="input-group">
+                <label>Damage Modifier +:</label>
+                <input type="number" aria-required="true"  name="damageModifier" min="1" max="99" required/>
+            </div>
+            <div class="input-group">
+                <label>AC:</label>
+                <input type="number" aria-required="true" name="ac" min="1" max="99" required/>
+            </div>
+            <div class="NewBattle">
+                <button class="button">Новый бой</button>
+            </div>
+        </div>
+    </form>
+</div>
